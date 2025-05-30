@@ -1,12 +1,29 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
+// src/app/app.config.ts
+import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
-
-import { routes } from './app.routes';
+import {LandingPage} from '../landing-page/landing-page';
+import {Dashboard} from '../dashboard/dashboard';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideBrowserGlobalErrorListeners(),
-    provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes)
+    provideRouter([
+      {
+        path: '',
+        component: LandingPage,
+      },
+      {
+        path: 'home',
+        component: LandingPage,
+      },
+      {
+        path: 'dashboard',
+        component: Dashboard,
+      },
+      {
+        path: '**',
+        redirectTo: '',
+      },
+
+    ])
   ]
 };
