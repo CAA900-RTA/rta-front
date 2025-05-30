@@ -1,1 +1,21 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --rta-primary: #bbaee2;
+  --rta-secondary: #59912c;
+}
+
+.rta-bg {
+  background-color: var(--rta-secondary);
+  color: #fff;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.rta-bg:hover {
+  background-color: #fff;
+  color: var(--rta-secondary);
+  border-color: var(--rta-secondary);
+}
