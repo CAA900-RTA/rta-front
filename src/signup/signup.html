@@ -1,32 +1,72 @@
-<div class="signup-container">
-  <form class="signup-form" (ngSubmit)="onSubmit()">
-    <h2>Create Account</h2>
 
-    <div class="form-group">
-      <label for="username">Username</label>
-      <input type="text" id="username" [(ngModel)]="formData.username" name="username" required />
-    </div>
+<form class="login-form" action="/login" method="POST">
+  <h2>Signup</h2>
 
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input type="password" id="password" [(ngModel)]="formData.password" name="password" required />
-    </div>
+  <!-- Username input -->
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input
+      type="text"
+      id="username"
+      name="username"
+      required
+      autocomplete="username"
+      placeholder="Enter your username"
+    />
+  </div>
 
-    <div class="form-group">
-      <label for="email">Email Address</label>
-      <input type="email" id="email" [(ngModel)]="formData.email" name="email" required />
-    </div>
+  <!-- Password input -->
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input
+      type="password"
+      id="password"
+      name="password"
+      required
+      autocomplete="current-password"
+      placeholder="Enter your password"
+    />
+  </div>
 
-    <div class="form-group">
-      <label for="phone">Phone Number</label>
-      <input type="tel" id="phone" [(ngModel)]="formData.phone" name="phone" />
-    </div>
+  <div class="form-group">
+    <label for="emailAddress">Email Address</label>
+    <input
+      type="password"
+      id="emailAddress"
+      name="emailAddress"
+      required
+      placeholder="Enter your email address"
+    />
+  </div>
 
-    <div class="form-group">
-      <label for="location">Location (Optional)</label>
-      <input type="text" id="location" [(ngModel)]="formData.location" name="location" />
-    </div>
+  <div class="form-group">
+    <label for="phoneNumber">Phone Number</label>
+    <input
+      type="text"
+      id="phoneNumber"
+      name="phoneNumber"
+      required
+      placeholder="Enter your phone number"
+    />
+  </div>
 
-    <button type="submit">Sign Up</button>
-  </form>
-</div>
+  <div class="form-group">
+    <label for="location">Location</label>
+    <input
+      type="text"
+      id="location"
+      name="location"
+      required
+      placeholder="Enter your location"
+    />
+  </div>
+
+  <!-- Login button -->
+  <button type="submit">Signup</button>
+
+  <!-- Signup link -->
+  <div class="signup-link">
+    <p>Already have an account? <a href="/login">Login</a></p>
+  </div>
+</form>
+
