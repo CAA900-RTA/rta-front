@@ -16,3 +16,14 @@ frontend:
   cache:
     paths:
       - .npm/**/*
+  customHeaders:
+    - pattern: '**/*'
+      headers:
+        - key: 'Cache-Control'
+          value: 'no-cache'
+  # Rewrite rule for Angular routing
+  redirects:
+    - source: "</^((?!\\.).)*$/>"
+      target: /index.html
+      status: 200
+      condition: null
