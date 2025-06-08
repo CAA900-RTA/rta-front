@@ -10,7 +10,7 @@ frontend:
       commands:
         - npm run build -- --configuration production
   artifacts:
-    baseDirectory: dist/  # ← make sure this matches your actual Angular output folder
+    baseDirectory: dist/rta  # ← make sure this matches your actual Angular output folder
     files:
       - '**/*'
   cache:
