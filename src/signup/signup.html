@@ -1,72 +1,77 @@
+<div class="signup-container">
+  <form class="signup-form" #signupForm="ngForm" (ngSubmit)="onSubmit()">
+    <h2>Create Account</h2>
 
-<form class="login-form" action="/login" method="POST">
-  <h2>Signup</h2>
+    <!-- Username -->
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input
+        type="text"
+        id="username"
+        [(ngModel)]="formData.username"
+        name="username"
+        required
+        #username="ngModel"
+      />
+      <div *ngIf="username.invalid && username.touched" class="error">
+        Username is required.
+      </div>
+    </div>
 
-  <!-- Username input -->
-  <div class="form-group">
-    <label for="username">Username</label>
-    <input
-      type="text"
-      id="username"
-      name="username"
-      required
-      autocomplete="username"
-      placeholder="Enter your username"
-    />
-  </div>
+    <!-- Password -->
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input
+        type="password"
+        id="password"
+        [(ngModel)]="formData.password"
+        name="password"
+        required
+        #password="ngModel"
+        (input)="validatePassword(formData.password)"
+      />
 
-  <!-- Password input -->
-  <div class="form-group">
-    <label for="password">Password</label>
-    <input
-      type="password"
-      id="password"
-      name="password"
-      required
-      autocomplete="current-password"
-      placeholder="Enter your password"
-    />
-  </div>
+      <!-- Live Password Checklist -->
+      <ul class="checklist">
+        <li [class.valid]="passwordLength">✔ At least 8 characters</li>
+        <li [class.valid]="hasUppercase">✔ At least one uppercase letter</li>
+        <li [class.valid]="hasNumber">✔ At least one number</li>
+        <li [class.valid]="hasSpecialChar">✔ At least one special character</li>
+      </ul>
 
-  <div class="form-group">
-    <label for="emailAddress">Email Address</label>
-    <input
-      type="password"
-      id="emailAddress"
-      name="emailAddress"
-      required
-      placeholder="Enter your email address"
-    />
-  </div>
+      <div *ngIf="password.invalid && password.touched && !isPasswordValid()" class="error">
+        Password doesn't meet all requirements.
+      </div>
+    </div>
 
-  <div class="form-group">
-    <label for="phoneNumber">Phone Number</label>
-    <input
-      type="text"
-      id="phoneNumber"
-      name="phoneNumber"
-      required
-      placeholder="Enter your phone number"
-    />
-  </div>
+    <!-- Email -->
+    <div class="form-group">
+      <label for="email">Email Address</label>
+      <input
+        type="email"
+        id="email"
+        [(ngModel)]="formData.email"
+        name="email"
+        required
+        #email="ngModel"
+      />
+      <div *ngIf="email.invalid && email.touched" class="error">
+        Valid email is required.
+      </div>
+    </div>
 
-  <div class="form-group">
-    <label for="location">Location</label>
-    <input
-      type="text"
-      id="location"
-      name="location"
-      required
-      placeholder="Enter your location"
-    />
-  </div>
+    <!-- Phone -->
+    <div class="form-group">
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" [(ngModel)]="formData.phone" name="phone" />
+    </div>
 
-  <!-- Login button -->
-  <button type="submit">Signup</button>
+    <!-- Location -->
+    <div class="form-group">
+      <label for="location">Location (Optional)</label>
+      <input type="text" id="location" [(ngModel)]="formData.location" name="location" />
+    </div>
 
-  <!-- Signup link -->
-  <div class="signup-link">
-    <p>Already have an account? <a href="/login">Login</a></p>
-  </div>
-</form>
-
+    <button type="submit" [disabled]="signupForm.invalid || !isPasswordValid()">Sign Up</button>
+  </form>
+</div>
