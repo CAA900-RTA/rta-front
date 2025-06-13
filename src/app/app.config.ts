@@ -2,9 +2,9 @@
 import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import {LandingPage} from '../landing-page/landing-page';
-import {Dashboard} from '../dashboard/dashboard';
 import { LoginComponent } from '../login/login';
 import { SignupComponent } from '../signup/signup';
+import {Profile} from '../profile/profile';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,7 +19,7 @@ export const appConfig: ApplicationConfig = {
       },
       {
         path: 'dashboard',
-        component: Dashboard,
+        component: Profile,
       },
       {
         path: 'login',

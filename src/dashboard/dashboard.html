@@ -1,13 +1,20 @@
- <h2>Upload or Paste Form</h2>
-  <form>
-    <label for="fileUpload">Upload Document:</label>
-    <div class="upload-box" onclick="document.getElementById('fileUpload').click();">
-      <p>📄 Drag & drop a file here, or <span>click to upload</span></p>
-      <input type="file" id="fileUpload" name="fileUpload" hidden>
-    </div>
+ <div class="row">
+   <div class="col-md-7 mt-5">
+     <h2>Upload or Paste Job Description</h2>
+     <form>
+       <label for="fileUpload">Upload Document:</label>
+       <div class="upload-box" onclick="document.getElementById('fileUpload').click();">
+         <p>📄 Drag & drop a file here, or <span>click to upload</span></p>
+         <input type="file" id="fileUpload" name="fileUpload" hidden>
+       </div>
 
-    <label for="textInput">Enter the Job description</label>
-    <textarea id="textInput" name="textInput" placeholder="Paste your text here..."></textarea>
+       <label for="textInput">Enter the Job description</label>
+       <textarea id="textInput" name="textInput" placeholder="Paste your text here..."></textarea>
 
-    <button type="submit">Submit</button>
-  </form>
+       <button type="submit">Submit</button>
+     </form>
+   </div>
+   <div class="col-md-5">
+<p></p>
+   </div>
+ </div>

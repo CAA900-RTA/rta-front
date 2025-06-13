@@ -22,13 +22,3 @@ nav.navbar {
   max-height: 50px;
 }
 
-.content-wrapper {
-  min-height: 80vh !important;
-  padding-top: 80px;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-
