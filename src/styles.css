@@ -19,3 +19,14 @@
   color: var(--rta-secondary);
   border-color: var(--rta-secondary);
 }
+
+
+.content-wrapper {
+  min-height: 80vh !important;
+  padding-top: 80px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+

@@ -12,7 +12,7 @@ export class LandingPage{
   constructor(private router: Router) {}
 
   openDashboard() {
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/login']);
   }
 
 }
