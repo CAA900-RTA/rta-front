@@ -172,6 +172,6 @@ button[type="submit"]:hover {
 }
 
 .checklist li.valid {
-  color: green;
+  color: rgb(56, 218, 56);
   font-weight: bold;
 }

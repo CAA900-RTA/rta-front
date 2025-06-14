@@ -29,10 +29,12 @@
         required
         #password="ngModel"
         (input)="validatePassword(formData.password)"
+        (focus)="showPasswordCriteria = true"
+        (blur)="showPasswordCriteria = false"
       />
 
-      <!-- Live Password Checklist -->
-      <ul class="checklist">
+      <!-- Password Criteria - Shown only on focus -->
+      <ul *ngIf="showPasswordCriteria" class="checklist">
         <li [class.valid]="passwordLength">✔ At least 8 characters</li>
         <li [class.valid]="hasUppercase">✔ At least one uppercase letter</li>
         <li [class.valid]="hasNumber">✔ At least one number</li>
