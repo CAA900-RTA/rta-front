@@ -61,4 +61,4 @@ For more information on using the Angular CLI, including detailed command refere
 TODO
 1. When logged in, change navbar
 2. Change color of profile
-3. 
+3. Skills change 

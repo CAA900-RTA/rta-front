@@ -1,86 +1,155 @@
 <div class="mx-5">
-<mat-tab-group mat-stretch-tabs dynamicHeight>
+  <mat-tab-group mat-stretch-tabs dynamicHeight>
+    <!-- Tab 1: Profile Builder -->
+    <mat-tab label="Build Profile">
+      <div class="p-4">
+        <form [formGroup]="profileForm">
 
-  <!-- Tab 1: Profile Builder -->
-  <mat-tab label="Build Profile">
-    <div class="p-4">
-      <form [formGroup]="profileForm">
-        <!-- Skills -->
-        <div class="mb-4">
-          <label class="form-label fw-bold">Skills</label>
-          <div class="row">
-            <div class="col-6 col-md-4 mb-2" *ngFor="let skill of skillsList">
-              <div class="form-check" [formGroup]="skillsFormGroup">
-                <input type="checkbox" class="form-check-input"
-                       [formControlName]="skill" [id]="skill">
-                <label class="form-check-label" [for]="skill">{{ skill }}</label>
-              </div>
+          <!-- Custom Tags -->
+          <div class="mb-4">
+            <label class="form-label fw-bold">Custom Tags</label>
+            <mat-form-field class="w-100">
+              <input
+                matInput
+                formControlName="customTagsInput"
+                placeholder="Type and press Enter"
+                (keydown.enter)="addCustomTag(); $event.preventDefault();"
+              />
+            </mat-form-field>
+
+            <div formArrayName="customTags" class="tags mt-2">
+              <span class="tag" *ngFor="let tagCtrl of customTags.controls; let i = index">
+                {{ tagCtrl.value }}
+                <button
+                  type="button"
+                  class="btn-close ms-2"
+                  aria-label="Remove"
+                  (click)="removeCustomTag(i)"
+                ></button>
+              </span>
             </div>
           </div>
-        </div>
 
-        <!-- Work Experience -->
-        <div class="mb-4">
-          <label class="form-label fw-bold">Work Experience</label>
-          <div formArrayName="experiences">
-            <div *ngFor="let exp of experiences.controls; let i = index" [formGroupName]="i" class="border p-3 mb-2 rounded bg-light">
-              <div class="row g-3">
-                <div class="col-md-6">
-                  <input type="text" formControlName="jobTitle" class="form-control" placeholder="Job Title">
-                </div>
-                <div class="col-md-4">
-                  <input type="number" formControlName="years" class="form-control" placeholder="Years">
-                </div>
-                <div class="col-md-2 text-end">
-                  <button class="btn btn-danger btn-sm" (click)="removeExperience(i)" type="button" *ngIf="experiences.length > 1">Remove</button>
+          <!-- Work Experience -->
+          <div class="mb-4">
+            <label class="form-label fw-bold">Work Experience</label>
+            <div formArrayName="experiences">
+              <div
+                *ngFor="let exp of experiences.controls; let i = index"
+                [formGroupName]="i"
+                class="border p-3 mb-2 rounded bg-light"
+              >
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <input
+                      type="text"
+                      formControlName="jobTitle"
+                      class="form-control"
+                      placeholder="Job Title"
+                    />
+                  </div>
+                  <div class="col-md-4">
+                    <input
+                      type="number"
+                      formControlName="years"
+                      class="form-control"
+                      placeholder="Years"
+                    />
+                  </div>
+                  <div class="col-md-2 text-end">
+                    <button
+                      class="btn btn-danger btn-sm"
+                      (click)="removeExperience(i)"
+                      type="button"
+                      *ngIf="experiences.length > 1"
+                    >
+                      Remove
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
+            <button
+              class="btn btn-outline-primary btn-sm mt-2"
+              type="button"
+              (click)="addExperience()"
+            >
+              + Add Experience
+            </button>
           </div>
-          <button class="btn btn-outline-primary btn-sm mt-2" type="button" (click)="addExperience()">+ Add Experience</button>
-        </div>
 
-        <!-- Education -->
-        <div class="mb-4">
-          <label class="form-label fw-bold">Education Qualifications</label>
-          <div formArrayName="education">
-            <div *ngFor="let edu of education.controls; let i = index" [formGroupName]="i" class="border p-3 mb-2 rounded bg-light">
-              <div class="row g-3">
-                <div class="col-md-6">
-                  <input type="text" formControlName="degree" class="form-control" placeholder="Degree">
-                </div>
-                <div class="col-md-4">
-                  <input type="number" formControlName="year" class="form-control" placeholder="Year">
-                </div>
-                <div class="col-md-2 text-end">
-                  <button class="btn btn-danger btn-sm" (click)="removeEducation(i)" type="button" *ngIf="education.length > 1">Remove</button>
+          <!-- Education -->
+          <div class="mb-4">
+            <label class="form-label fw-bold">Education Qualifications</label>
+            <div formArrayName="education">
+              <div
+                *ngFor="let edu of education.controls; let i = index"
+                [formGroupName]="i"
+                class="border p-3 mb-2 rounded bg-light"
+              >
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <input
+                      type="text"
+                      formControlName="degree"
+                      class="form-control"
+                      placeholder="Degree"
+                    />
+                  </div>
+                  <div class="col-md-4">
+                    <input
+                      type="number"
+                      formControlName="year"
+                      class="form-control"
+                      placeholder="Year"
+                    />
+                  </div>
+                  <div class="col-md-2 text-end">
+                    <button
+                      class="btn btn-danger btn-sm"
+                      (click)="removeEducation(i)"
+                      type="button"
+                      *ngIf="education.length > 1"
+                    >
+                      Remove
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
+            <button
+              class="btn btn-outline-primary btn-sm mt-2"
+              type="button"
+              (click)="addEducation()"
+            >
+              + Add Education
+            </button>
           </div>
-          <button class="btn btn-outline-primary btn-sm mt-2" type="button" (click)="addEducation()">+ Add Education</button>
-        </div>
 
-        <!-- Description -->
-        <div class="mb-4">
-          <label class="form-label fw-bold">Description</label>
-          <textarea class="form-control" formControlName="description" rows="4" placeholder="Tell us about yourself..."></textarea>
-        </div>
+          <!-- Description -->
+          <div class="mb-4">
+            <label class="form-label fw-bold">Description</label>
+            <textarea
+              class="form-control"
+              formControlName="description"
+              rows="4"
+              placeholder="Tell us about yourself..."
+            ></textarea>
+          </div>
 
-        <!-- Submit button for profile form, if you want -->
-        <div class="text-end">
-          <button class="btn btn-primary" type="submit">Save Profile</button>
-        </div>
-      </form>
-    </div>
-  </mat-tab>
+          <!-- Submit -->
+          <div class="text-end">
+            <button class="btn btn-primary rta-bg" type="submit">Save Profile</button>
+          </div>
+        </form>
+      </div>
+    </mat-tab>
 
-  <!-- Tab 2: Resume Form -->
-  <mat-tab label="Build Resume">
-    <div class="p-4">
-      <app-dashboard></app-dashboard>
-    </div>
-  </mat-tab>
-
-</mat-tab-group>
+    <!-- Tab 2: Resume -->
+    <mat-tab label="Build Resume">
+      <div class="p-4">
+        <app-dashboard></app-dashboard>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
 </div>
