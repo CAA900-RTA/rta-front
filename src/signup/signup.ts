@@ -18,7 +18,9 @@ export class SignupComponent {
     location: ''
   };
 
-  passwordLength = false;
+showPasswordCriteria = false;
+
+passwordLength = false;
 hasUppercase = false;
 hasNumber = false;
 hasSpecialChar = false;
@@ -33,6 +35,7 @@ validatePassword(password: string): void {
 isPasswordValid(): boolean {
   return this.passwordLength && this.hasUppercase && this.hasNumber && this.hasSpecialChar;
 }
+
 
 
   onSubmit() {
