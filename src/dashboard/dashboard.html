@@ -1,38 +1,63 @@
-<div class="container">
-  <h2>Upload or Paste Job Description</h2>
+<div class="app-container">
+  <header class="header">
+    <h1>📄 Resume Builder Dashboard</h1>
+  </header>
 
-  <form (submit)="onSubmit()">
-    <!-- File Upload -->
-    <label for="fileUpload">Upload Document:</label>
-    <div class="upload-box" (click)="fileInput.click()">
-      <p>📄 Drag & drop a file here, or <span>click to upload</span></p>
-      <input 
-        type="file" 
-        #fileInput 
-        id="fileUpload" 
-        name="fileUpload" 
-        hidden 
-        (change)="onFileSelected($event)"
-        accept=".pdf,.doc,.docx"
-      >
+  <div class="content">
+    <div class="left">
+      <h2>Upload or Paste Job Description</h2>
+
+      <form (submit)="onSubmit()">
+        <!-- File Upload -->
+        <label for="fileUpload">Upload Document:</label>
+        <div class="upload-box" (click)="fileInput.click()">
+          <p>📄 Drag & drop a file here, or <span>click to upload</span></p>
+          <input
+            type="file"
+            #fileInput
+            id="fileUpload"
+            name="fileUpload"
+            hidden
+            (change)="onFileSelected($event)"
+            accept=".pdf,.doc,.docx"
+          >
+        </div>
+
+        <!-- File Preview -->
+        <div *ngIf="uploadedFileName" class="uploaded-file">
+          <a [href]="uploadedFileURL" target="_blank">{{ uploadedFileName }}</a>
+        </div>
+
+        <!-- Job Description -->
+        <label for="textInput">Enter the Job Description</label>
+        <textarea
+          id="textInput"
+          name="textInput"
+          [(ngModel)]="jobDescription"
+          placeholder="Paste your text here..."
+          required
+        ></textarea>
+
+        <!-- Build Button -->
+        <button type="submit" [disabled]="!isFormValid()">Build</button>
+      </form>
     </div>
 
-    <!-- File Preview -->
-    <div *ngIf="uploadedFileName" class="uploaded-file">
-      <a [href]="uploadedFileURL" target="_blank">{{ uploadedFileName }}</a>
+    <div class="right">
+      <div *ngIf="builtFileContent; else placeholder">
+        <div class="file-card">
+          <h3>{{ builtFileName }}</h3>
+<!--          <pre class="file-content">{{ builtFileContent }}</pre>-->
+          <a [href]="builtFileURL" [download]="builtFileName" class="download-btn">Download</a>
+          <br/>
+          <a class="download-btn mt-2" (click)="goToProfile()">Regenerate</a>
+        </div>
+      </div>
+      <ng-template #placeholder>
+        <div class="file-card empty">
+          <p>No file generated yet</p>
+        </div>
+      </ng-template>
     </div>
-
-    <!-- Job Description -->
-    <label for="textInput">Enter the Job Description</label>
-    <textarea 
-      id="textInput" 
-      name="textInput" 
-      [(ngModel)]="jobDescription" 
-      placeholder="Paste your text here..."
-      required
-    ></textarea>
-
-    <!-- Build Button -->
-    <button type="submit" [disabled]="!isFormValid()">Build</button>
-  </form>
+  </div>
 </div>
