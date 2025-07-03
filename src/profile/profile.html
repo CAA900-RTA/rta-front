@@ -1,13 +1,12 @@
 <div class="mx-5">
-  <mat-tab-group mat-stretch-tabs dynamicHeight>
+  <mat-tab-group mat-stretch-tabs dynamicHeight #tabGroup>
     <!-- Tab 1: Profile Builder -->
     <mat-tab label="Build Profile">
       <div class="p-4">
-        <form [formGroup]="profileForm">
-
+        <form [formGroup]="profileForm" (ngSubmit)="goToNextTab(tabGroup)">
           <!-- Custom Tags -->
           <div class="mb-4">
-            <label class="form-label fw-bold">Custom Tags</label>
+            <label class="form-label fw-bold">Add Skills</label>
             <mat-form-field class="w-100">
               <input
                 matInput
@@ -40,7 +39,7 @@
                 class="border p-3 mb-2 rounded bg-light"
               >
                 <div class="row g-3">
-                  <div class="col-md-6">
+                  <div class="col-md-4">
                     <input
                       type="text"
                       formControlName="jobTitle"
@@ -50,20 +49,28 @@
                   </div>
                   <div class="col-md-4">
                     <input
+                      type="text"
+                      formControlName="company"
+                      class="form-control"
+                      placeholder="Company Name"
+                    />
+                  </div>
+                  <div class="col-md-3">
+                    <input
                       type="number"
                       formControlName="years"
                       class="form-control"
                       placeholder="Years"
                     />
                   </div>
-                  <div class="col-md-2 text-end">
+                  <div class="col-md-1 text-end">
                     <button
                       class="btn btn-danger btn-sm"
                       (click)="removeExperience(i)"
                       type="button"
                       *ngIf="experiences.length > 1"
                     >
-                      Remove
+                      ×
                     </button>
                   </div>
                 </div>
@@ -88,7 +95,7 @@
                 class="border p-3 mb-2 rounded bg-light"
               >
                 <div class="row g-3">
-                  <div class="col-md-6">
+                  <div class="col-md-4">
                     <input
                       type="text"
                       formControlName="degree"
@@ -98,20 +105,28 @@
                   </div>
                   <div class="col-md-4">
                     <input
+                      type="text"
+                      formControlName="institution"
+                      class="form-control"
+                      placeholder="Institution Name"
+                    />
+                  </div>
+                  <div class="col-md-3">
+                    <input
                       type="number"
                       formControlName="year"
                       class="form-control"
                       placeholder="Year"
                     />
                   </div>
-                  <div class="col-md-2 text-end">
+                  <div class="col-md-1 text-end">
                     <button
                       class="btn btn-danger btn-sm"
                       (click)="removeEducation(i)"
                       type="button"
                       *ngIf="education.length > 1"
                     >
-                      Remove
+                      ×
                     </button>
                   </div>
                 </div>
@@ -137,19 +152,19 @@
             ></textarea>
           </div>
 
-          <!-- Submit -->
+          <!-- Next -->
           <div class="text-end">
-            <button class="btn btn-primary rta-bg" type="submit">Save Profile</button>
+            <button class="btn btn-primary rta-bg" type="submit">Next</button>
           </div>
         </form>
       </div>
     </mat-tab>
 
     <!-- Tab 2: Resume -->
-    <mat-tab label="Build Resume">
-      <div class="p-4">
-        <app-dashboard></app-dashboard>
-      </div>
-    </mat-tab>
+<mat-tab label="Build Resume" [disabled]="!profileForm.valid">
+  <div class="p-4">
+    <app-dashboard></app-dashboard>
+  </div>
+</mat-tab>
   </mat-tab-group>
 </div>
