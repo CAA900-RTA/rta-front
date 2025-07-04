@@ -10,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class LandingPage {
 
-  private apiUrl = 'https://49emu5v5u3.execute-api.ca-central-1.amazonaws.com/stage/test'; // Replace with your API Gateway URL
+  private apiUrl = 'https://bdtwdawg26.execute-api.ca-central-1.amazonaws.com/dev/fetchProfile'; // Replace with your API Gateway URL
 
   constructor(private router: Router, private http: HttpClient) {}
 
