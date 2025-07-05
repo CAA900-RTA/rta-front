@@ -113,6 +113,9 @@ createEducationGroup(): FormGroup {
     }
 
     inputControl?.reset();
+
+
+    console.log("form data",this.profileForm );
   }
 
   removeCustomTag(index: number): void {
