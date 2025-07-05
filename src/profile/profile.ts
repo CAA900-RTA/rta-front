@@ -74,6 +74,7 @@ export class Profile implements OnInit {
       tabGroup.selectedIndex = 1;
 
       const payload = {
+        username: "John", //hardcoded
         description: this.profileForm.value.description,
         skills: this.profileForm.value.customTags,
         experiences: this.profileForm.value.experiences,
@@ -84,10 +85,10 @@ export class Profile implements OnInit {
 
 
       // uncomment this while testing
-      // this.http.post(this.saveUrl, payload).subscribe({
-      //   next: (res) => console.log('✅ Save profile response:', res),
-      //   error: (err) => console.error('❌ Save error:', err)
-      // });
+      this.http.post(this.saveUrl, payload).subscribe({
+        next: (res) => console.log('✅ Save profile response:', res),
+        error: (err) => console.error('❌ Save error:', err)
+      });
 
 
 
