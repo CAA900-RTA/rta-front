@@ -53,14 +53,49 @@ export class Profile implements OnInit {
 
   ngOnInit(): void {}
 
-  // --- Navigate to Next Tab ---
   goToNextTab(tabGroup: MatTabGroup): void {
+    const experiencesArray = this.profileForm.get('experiences') as FormArray;
+    for (let i = experiencesArray.length - 1; i >= 0; i--) {
+      const exp = experiencesArray.at(i);
+      if (exp.get('isDeleted')?.value === true) {
+        experiencesArray.removeAt(i);
+      }
+    }
+
+    const educationArray = this.profileForm.get('education') as FormArray;
+    for (let i = educationArray.length - 1; i >= 0; i--) {
+      const edu = educationArray.at(i);
+      if (edu.get('isDeleted')?.value === true) {
+        educationArray.removeAt(i);
+      }
+    }
+
     if (this.profileForm.valid) {
       tabGroup.selectedIndex = 1;
+
+      const payload = {
+        description: this.profileForm.value.description,
+        skills: this.profileForm.value.customTags,
+        experiences: this.profileForm.value.experiences,
+        education: this.profileForm.value.education,
+      };
+
+      console.log("payload", payload);
+
+
+      // uncomment this while testing
+      // this.http.post(this.saveUrl, payload).subscribe({
+      //   next: (res) => console.log('✅ Save profile response:', res),
+      //   error: (err) => console.error('❌ Save error:', err)
+      // });
+
+
+
     } else {
       alert('Please complete the profile form before proceeding.');
     }
   }
+
 
   // --- Experiences ---
   get experiences(): FormArray {
@@ -72,7 +107,8 @@ export class Profile implements OnInit {
     id: [''],
     jobTitle: ['', Validators.required],
     company: ['', Validators.required],
-    years: ['', [Validators.required, Validators.min(0)]]
+    years: ['', [Validators.required, Validators.min(0)]],
+    isDeleted: [false]
   });
 }
 
@@ -81,7 +117,10 @@ export class Profile implements OnInit {
   }
 
   removeExperience(index: number): void {
-    this.experiences.removeAt(index);
+    const work = this.experiences.at(index);
+    if (work) {
+      work.get('isDeleted')?.setValue(true);
+    }
   }
 
   // --- Education ---
@@ -89,21 +128,25 @@ export class Profile implements OnInit {
     return this.profileForm.get('education') as FormArray;
   }
 
-createEducationGroup(): FormGroup {
-  return this.fb.group({
-    id: [''],
-    degree: ['', Validators.required],
-    institution: ['', Validators.required],
-    year: ['', [Validators.required, Validators.min(1900)]]
-  });
-}
-
-  addEducation(): void {
-    this.education.push(this.createEducationGroup());
+  createEducationGroup(): FormGroup {
+    return this.fb.group({
+      id: [''],
+      degree: ['', Validators.required],
+      institution: ['', Validators.required],
+      year: ['', [Validators.required, Validators.min(0)]],
+      isDeleted: [false]
+    });
   }
 
   removeEducation(index: number): void {
-    this.education.removeAt(index);
+    const edu = this.education.at(index);
+    if (edu) {
+      edu.get('isDeleted')?.setValue(true);
+    }
+  }
+
+  addEducation(): void {
+    this.education.push(this.createEducationGroup());
   }
 
   // --- Custom Tags ---
@@ -127,30 +170,6 @@ createEducationGroup(): FormGroup {
 
   removeCustomTag(index: number): void {
     this.customTags.removeAt(index);
-  }
-
-  submitProfile() {
-    // if (this.profileForm.invalid) {
-    //   alert('Please complete the form before submitting.');
-    //   return;
-    // }
-
-    const payload = {
-      description: this.profileForm.value.description,
-      skills: this.profileForm.value.customTags,
-      experiences: this.profileForm.value.experiences,
-      education: this.profileForm.value.education,
-    };
-
-    console.log("payload", payload);
-
-
-    //
-    // this.http.post(this.saveUrl, payload).subscribe({
-    //   next: (res) => console.log('✅ Save profile response:', res),
-    //   error: (err) => console.error('❌ Save error:', err)
-    // });
-
   }
 
 }
