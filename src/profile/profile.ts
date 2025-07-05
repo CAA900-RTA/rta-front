@@ -14,6 +14,8 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { Dashboard } from '../dashboard/dashboard';
 import { MatTabGroup } from '@angular/material/tabs';
+import {Router} from '@angular/router';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-profile',
@@ -35,13 +37,16 @@ export class Profile implements OnInit {
   @ViewChild('tabGroup') tabGroup!: MatTabGroup;
 
   profileForm: FormGroup;
+  private fetchUrl = 'https://bdtwdawg26.execute-api.ca-central-1.amazonaws.com/dev/fetchProfile';
+  private saveUrl = 'https://bdtwdawg26.execute-api.ca-central-1.amazonaws.com/dev/saveProfile';
 
-  constructor(private fb: FormBuilder) {
+
+  constructor(private fb: FormBuilder, private http: HttpClient) {
     this.profileForm = this.fb.group({
       experiences: this.fb.array([this.createExperienceGroup()]),
       education: this.fb.array([this.createEducationGroup()]),
       description: [''],
-      customTagsInput: [''],
+      skills: [''],
       customTags: this.fb.array([])
     });
   }
@@ -64,6 +69,7 @@ export class Profile implements OnInit {
 
  createExperienceGroup(): FormGroup {
   return this.fb.group({
+    id: [''],
     jobTitle: ['', Validators.required],
     company: ['', Validators.required],
     years: ['', [Validators.required, Validators.min(0)]]
@@ -85,6 +91,7 @@ export class Profile implements OnInit {
 
 createEducationGroup(): FormGroup {
   return this.fb.group({
+    id: [''],
     degree: ['', Validators.required],
     institution: ['', Validators.required],
     year: ['', [Validators.required, Validators.min(1900)]]
@@ -105,7 +112,7 @@ createEducationGroup(): FormGroup {
   }
 
   addCustomTag(): void {
-    const inputControl = this.profileForm.get('customTagsInput');
+    const inputControl = this.profileForm.get('skills');
     const value = inputControl?.value?.trim();
 
     if (value && !this.customTags.value.includes(value)) {
@@ -115,10 +122,35 @@ createEducationGroup(): FormGroup {
     inputControl?.reset();
 
 
-    console.log("form data",this.profileForm );
+    console.log("form data",this.profileForm.value.value );
   }
 
   removeCustomTag(index: number): void {
     this.customTags.removeAt(index);
   }
+
+  submitProfile() {
+    // if (this.profileForm.invalid) {
+    //   alert('Please complete the form before submitting.');
+    //   return;
+    // }
+
+    const payload = {
+      description: this.profileForm.value.description,
+      skills: this.profileForm.value.customTags,
+      experiences: this.profileForm.value.experiences,
+      education: this.profileForm.value.education,
+    };
+
+    console.log("payload", payload);
+
+
+    //
+    // this.http.post(this.saveUrl, payload).subscribe({
+    //   next: (res) => console.log('✅ Save profile response:', res),
+    //   error: (err) => console.error('❌ Save error:', err)
+    // });
+
+  }
+
 }
