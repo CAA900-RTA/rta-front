@@ -10,19 +10,24 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
-        <li class="nav-item">
-          <a class="nav-link" href="/login">Login</a>
+        <li class="nav-item" *ngIf="!isLoggedIn">
+          <button class="btn btn-outline-primary me-2" type="button" (click)="onLogin()">Login</button>
         </li>
-        <li class="nav-item">
-          <a href="/signup">
-            <button class="btn btn-primary ms-lg-2 my-2 my-lg-0 rta-bg" type="button" (click)="onSignup()">Signup</button>
-          </a>
-          </li>
+        <li class="nav-item" *ngIf="!isLoggedIn">
+          <button class="btn btn-primary rta-bg" type="button" (click)="onSignup()">Signup</button>
+        </li>
+        <li class="nav-item" *ngIf="isLoggedIn">
+          <span class="me-2 fw-bold">Welcome, {{ username }}</span>
+        </li>
+        <li class="nav-item" *ngIf="isLoggedIn">
+          <button class="btn btn-danger" type="button" (click)="onSignout()">Signout</button>
+        </li>
       </ul>
     </div>
   </div>
 </nav>
 <!--Header End-->
+
 
 <!--Components Start -->
 <!--<div class="content-wrapper d-flex justify-content-center align-items-center">-->
