@@ -10,7 +10,7 @@
             <mat-form-field class="w-100">
               <input
                 matInput
-                formControlName="customTagsInput"
+                formControlName="skills"
                 placeholder="Type and press Enter"
                 (keydown.enter)="addCustomTag(); $event.preventDefault();"
               />
@@ -35,6 +35,7 @@
             <div formArrayName="experiences">
               <div
                 *ngFor="let exp of experiences.controls; let i = index"
+                [hidden]="exp.get('isDeleted')?.value === true"
                 [formGroupName]="i"
                 class="border p-3 mb-2 rounded bg-light"
               >
@@ -91,6 +92,7 @@
             <div formArrayName="education">
               <div
                 *ngFor="let edu of education.controls; let i = index"
+                [hidden]="edu.get('isDeleted')?.value === true"
                 [formGroupName]="i"
                 class="border p-3 mb-2 rounded bg-light"
               >
