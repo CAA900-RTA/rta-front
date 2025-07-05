@@ -5,9 +5,12 @@ import {LandingPage} from '../landing-page/landing-page';
 import { LoginComponent } from '../login/login';
 import { SignupComponent } from '../signup/signup';
 import {Profile} from '../profile/profile';
+import { importProvidersFrom } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    importProvidersFrom(HttpClientModule),
     provideRouter([
       {
         path: '',
