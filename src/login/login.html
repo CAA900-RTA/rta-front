@@ -1,5 +1,5 @@
 <div class="content-wrapper d-flex justify-content-center align-items-center ">
-  <form class="login-form" action="/login" method="POST">
+  <form class="login-form" [formGroup]="loginForm" (ngSubmit)="open()">
     <h2>Login</h2>
 
     <!-- Username input -->
@@ -8,11 +8,14 @@
       <input
         type="text"
         id="username"
-        name="username"
-        required
+        formControlName="username"
         autocomplete="username"
         placeholder="Enter your username"
+        [class.invalid-input]="f['username'].invalid && f['username'].touched"
       />
+      <div *ngIf="f['username'].invalid && f['username'].touched" style="color: red; font-size: 0.875rem;">
+        Username is required.
+      </div>
     </div>
 
     <!-- Password input -->
@@ -21,20 +24,22 @@
       <input
         type="password"
         id="password"
-        name="password"
-        required
+        formControlName="password"
         autocomplete="current-password"
         placeholder="Enter your password"
+        [class.invalid-input]="f['password'].invalid && f['password'].touched"
       />
+      <div *ngIf="f['password'].invalid && f['password'].touched" style="color: red; font-size: 0.875rem;">
+        Password is required.
+      </div>
     </div>
 
     <!-- Login button -->
-    <button type="submit" (click)="open()">Login</button>
+    <button type="submit">Login</button>
 
     <!-- Signup link -->
     <div class="signup-link">
-      <p>Don't have an account? <a href="/signup">Sign up</a></p>
+      <p>Don't have an account? <a routerLink="/signup">Sign up</a></p>
     </div>
   </form>
-
 </div>

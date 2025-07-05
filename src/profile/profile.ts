@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -13,6 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { Dashboard } from '../dashboard/dashboard';
+import { MatTabGroup } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-profile',
@@ -31,52 +32,43 @@ import { Dashboard } from '../dashboard/dashboard';
   styleUrl: 'profile.css'
 })
 export class Profile implements OnInit {
-  isLinear = true;
+  @ViewChild('tabGroup') tabGroup!: MatTabGroup;
 
   profileForm: FormGroup;
-  secondFormGroup: FormGroup;
-  resumeForm: FormGroup;
-
 
   constructor(private fb: FormBuilder) {
     this.profileForm = this.fb.group({
-      experiences: this.fb.array([
-        this.createExperienceGroup()
-      ]),
-      education: this.fb.array([
-        this.createEducationGroup()
-      ]),
+      experiences: this.fb.array([this.createExperienceGroup()]),
+      education: this.fb.array([this.createEducationGroup()]),
       description: [''],
-
-      // New reactive input + list for tags
       customTagsInput: [''],
       customTags: this.fb.array([])
-    });
-
-    this.secondFormGroup = this.fb.group({
-      secondCtrl: ['', Validators.required]
-    });
-
-    this.resumeForm = this.fb.group({
-      fullName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      summary: ['']
     });
   }
 
   ngOnInit(): void {}
+
+  // --- Navigate to Next Tab ---
+  goToNextTab(tabGroup: MatTabGroup): void {
+    if (this.profileForm.valid) {
+      tabGroup.selectedIndex = 1;
+    } else {
+      alert('Please complete the profile form before proceeding.');
+    }
+  }
 
   // --- Experiences ---
   get experiences(): FormArray {
     return this.profileForm.get('experiences') as FormArray;
   }
 
-  createExperienceGroup(): FormGroup {
-    return this.fb.group({
-      jobTitle: [''],
-      years: ['']
-    });
-  }
+ createExperienceGroup(): FormGroup {
+  return this.fb.group({
+    jobTitle: ['', Validators.required],
+    company: ['', Validators.required],
+    years: ['', [Validators.required, Validators.min(0)]]
+  });
+}
 
   addExperience(): void {
     this.experiences.push(this.createExperienceGroup());
@@ -91,12 +83,13 @@ export class Profile implements OnInit {
     return this.profileForm.get('education') as FormArray;
   }
 
-  createEducationGroup(): FormGroup {
-    return this.fb.group({
-      degree: [''],
-      year: ['']
-    });
-  }
+createEducationGroup(): FormGroup {
+  return this.fb.group({
+    degree: ['', Validators.required],
+    institution: ['', Validators.required],
+    year: ['', [Validators.required, Validators.min(1900)]]
+  });
+}
 
   addEducation(): void {
     this.education.push(this.createEducationGroup());
@@ -106,12 +99,7 @@ export class Profile implements OnInit {
     this.education.removeAt(index);
   }
 
-  // --- Resume Submit ---
-  onSubmitResume(): void {
-    console.log('Resume Form Data:', this.resumeForm.value);
-  }
-
-  // --- Custom Tags (type + enter + x to remove) ---
+  // --- Custom Tags ---
   get customTags(): FormArray {
     return this.profileForm.get('customTags') as FormArray;
   }
