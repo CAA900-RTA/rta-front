@@ -24,7 +24,14 @@ export class LoginComponent implements OnInit {
 
   open(): void {
     if (this.loginForm.valid) {
-      this.router.navigate(['/dashboard']);
+      const username = this.loginForm.get('username')?.value;
+localStorage.setItem('isLoggedIn', 'true');
+localStorage.setItem('username', this.loginForm.value.username);
+    this.router.navigate(['/dashboard']).then(() => {
+      window.location.reload();
+    });
+
+
     } else {
       this.loginForm.markAllAsTouched();
     }

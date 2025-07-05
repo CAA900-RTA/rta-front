@@ -73,7 +73,11 @@
       <label for="location">Location (Optional)</label>
       <input type="text" id="location" [(ngModel)]="formData.location" name="location" />
     </div>
-
+    
     <button type="submit" [disabled]="signupForm.invalid || !isPasswordValid()">Sign Up</button>
+
+    <div class="signup-link">
+      <p>Have an account? <a href="/login">Login</a></p>
+    </div>
   </form>
 </div>
