@@ -1,5 +1,7 @@
 <div class="content-wrapper d-flex justify-content-center align-items-center">
-  <form class="login-form" #signupForm="ngForm" (ngSubmit)="onSubmit()">
+  
+  <!-- Main Signup Form (show when not confirming) -->
+  <form class="login-form" #signupForm="ngForm" (ngSubmit)="onSubmit()" *ngIf="!showConfirmation">
     <h2>Create Account</h2>
 
     <!-- Username -->
@@ -74,10 +76,62 @@
       <input type="text" id="location" [(ngModel)]="formData.location" name="location" />
     </div>
     
-    <button type="submit" [disabled]="signupForm.invalid || !isPasswordValid()">Sign Up</button>
+    <!-- Updated submit button with loading state -->
+    <button type="submit" [disabled]="signupForm.invalid || !isPasswordValid() || loading">
+      {{ loading ? 'Creating Account...' : 'Sign Up' }}
+    </button>
 
+    <!-- Error message display -->
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+
+    <!-- Login link with routerLink -->
     <div class="signup-link">
-      <p>Have an account? <a href="/login">Login</a></p>
+      <p>Have an account? <a routerLink="/login">Login</a></p>
     </div>
   </form>
+
+  <!-- Confirmation Form (show when confirming) -->
+  <form class="login-form" #confirmForm="ngForm" (ngSubmit)="onConfirmSignUp()" *ngIf="showConfirmation">
+    <h2>Verify Your Account</h2>
+    
+    <div class="confirmation-text">
+      We've sent a confirmation code to <strong>{{ formData.email }}</strong>. 
+      Please enter the code below to verify your account.
+    </div>
+
+    <!-- Confirmation Code -->
+    <div class="form-group">
+      <label for="confirmationCode">Confirmation Code</label>
+      <input
+        type="text"
+        id="confirmationCode"
+        [(ngModel)]="confirmationCode"
+        name="confirmationCode"
+        required
+        #code="ngModel"
+        placeholder="Enter confirmation code"
+      />
+      <div *ngIf="code.invalid && code.touched" class="error">
+        Confirmation code is required.
+      </div>
+    </div>
+
+    <!-- Confirm button -->
+    <button type="submit" [disabled]="confirmForm.invalid || loading">
+      {{ loading ? 'Confirming...' : 'Confirm Account' }}
+    </button>
+
+    <!-- Back button -->
+    <button type="button" (click)="goBackToSignup()" class="secondary-btn">
+      Back to Sign Up
+    </button>
+
+    <!-- Error message display -->
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+  </form>
+
 </div>

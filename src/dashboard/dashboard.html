@@ -1,3 +1,13 @@
+<div class="dashboard-header">
+  <div class="user-info">
+    <h1>Welcome, {{ userName }}!</h1>
+    <p *ngIf="currentUser?.email">{{ currentUser?.email }}</p>
+  </div>
+  <button (click)="logout()" class="logout-btn">
+    Sign Out
+  </button>
+</div>
+
 <div class="app-container">
   <header class="header">
     <h1>📄 Resume Builder Dashboard</h1>

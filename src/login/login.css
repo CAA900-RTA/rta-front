@@ -141,3 +141,8 @@ button[type="submit"]:hover {
     padding-top: 1rem;
   }
 }
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: #6c757d;
+}

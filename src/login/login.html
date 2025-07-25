@@ -2,19 +2,20 @@
   <form class="login-form" [formGroup]="loginForm" (ngSubmit)="open()">
     <h2>Login</h2>
 
-    <!-- Username input -->
+    <!-- Email input (changed from username) -->
     <div class="form-group">
-      <label for="username">Username</label>
+      <label for="username">Email</label>
       <input
-        type="text"
+        type="email"
         id="username"
         formControlName="username"
-        autocomplete="username"
-        placeholder="Enter your username"
+        autocomplete="email"
+        placeholder="Enter your email"
         [class.invalid-input]="f['username'].invalid && f['username'].touched"
       />
       <div *ngIf="f['username'].invalid && f['username'].touched" style="color: red; font-size: 0.875rem;">
-        Username is required.
+        <span *ngIf="f['username'].errors?.['required']">Email is required.</span>
+        <span *ngIf="f['username'].errors?.['email']">Please enter a valid email address.</span>
       </div>
     </div>
 
@@ -34,12 +35,38 @@
       </div>
     </div>
 
-    <!-- Login button -->
-    <button type="submit">Login</button>
+    <!-- Login button with loading state -->
+    <button type="submit" [disabled]="loginForm.invalid || loading">
+      {{ loading ? 'Signing In...' : 'Login' }}
+    </button>
 
+    <!-- Error message display -->
+    <div *ngIf="errorMessage" style="color: red; font-size: 0.875rem; margin-top: 10px; text-align: center;">
+      {{ errorMessage }}
+    </div>
+<!-- Add this after your existing error message display -->
+<div *ngIf="errorMessage" class="alert alert-danger">
+  {{ errorMessage }}
+</div>
+
+<!-- Add these buttons when there's an existing signed-in user -->
+<div *ngIf="showSignOutOption" class="existing-user-actions mt-3">
+  <button type="button" 
+          (click)="signOutCurrentUser()" 
+          class="btn btn-secondary me-2"
+          [disabled]="loading">
+    Sign Out Current User
+  </button>
+  <button type="button" 
+          (click)="forceSignIn()" 
+          class="btn btn-warning"
+          [disabled]="loading">
+    Sign Out & Login
+  </button>
+</div>
     <!-- Signup link -->
     <div class="signup-link">
-      <p>Don't have an account? <a href="/signup">Sign up</a></p>
+      <p>Don't have an account? <a routerLink="/signup">Sign up</a></p>
     </div>
   </form>
 </div>

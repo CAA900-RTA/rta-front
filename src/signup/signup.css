@@ -175,3 +175,109 @@ button[type="submit"]:hover {
   color: rgb(56, 218, 56);
   font-weight: bold;
 }
+/* Add these styles to the end of your existing signup.css file */
+
+/* Error message styling for Cognito errors */
+.error-message {
+  color: #dc3545;
+  font-size: 0.9rem;
+  margin-top: 15px;
+  padding: 12px;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Confirmation message styling */
+.confirmation-text {
+  background-color: #e7f3ff;
+  padding: 18px;
+  border-radius: 8px;
+  margin-bottom: 25px;
+  color: #0066cc;
+  font-size: 0.95rem;
+  text-align: center;
+  border: 1px solid #b8daff;
+  line-height: 1.4;
+}
+
+/* Disabled button styling */
+button[type="submit"]:disabled,
+.secondary-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: #6c757d;
+  transform: none; /* Remove hover lift effect when disabled */
+}
+
+button[type="submit"]:disabled:hover {
+  background-color: #6c757d;
+  transform: none;
+}
+
+/* Secondary button (Back to Sign Up) */
+.secondary-btn {
+  width: 100%;
+  padding: 0.9rem;
+  font-size: 1.1rem;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.secondary-btn:hover:not(:disabled) {
+  background-color: #5a6268;
+  transform: translateY(-2px);
+}
+
+/* Ensure forms maintain consistent spacing */
+.login-form form {
+  width: 100%;
+}
+
+/* Loading state styling */
+button[type="submit"].loading {
+  position: relative;
+}
+
+/* Responsive adjustments for new elements */
+@media (max-width: 768px) {
+  .error-message {
+    font-size: 0.85rem;
+    padding: 10px;
+  }
+  
+  .confirmation-text {
+    font-size: 0.9rem;
+    padding: 15px;
+  }
+  
+  .secondary-btn {
+    padding: 0.8rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .error-message {
+    font-size: 0.8rem;
+    padding: 8px;
+  }
+  
+  .confirmation-text {
+    font-size: 0.85rem;
+    padding: 12px;
+  }
+  
+  .secondary-btn {
+    padding: 0.7rem;
+    font-size: 0.95rem;
+  }
+}
