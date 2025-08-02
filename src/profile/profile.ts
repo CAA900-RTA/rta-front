@@ -101,11 +101,11 @@ export class Profile implements OnInit {
       // uncomment this while testing
       this.http.post(this.saveUrl, payload).subscribe({
         next: (res) => {
-          console.log('✅ Save profile response:', res)
+          console.log('Successfully saved', res)
           this.dataToSubmit = payload;
           tabGroup.selectedIndex = 1;
         },
-        error: (err) => console.error('❌ Save error:', err)
+        error: (err) => console.error('Error:', err)
       });
 
 
