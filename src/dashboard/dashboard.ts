@@ -1,9 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService, User } from '../app/services/auth.service';
-import {HttpClient, HttpHeaders} from '@angular/common/http'; // Adjust path as needed
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,7 +12,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http'; // Adjust path as 
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css']
 })
-export class Dashboard implements OnInit {
+export class Dashboard implements OnInit, OnChanges {
   // Existing properties
   uploadedFileName: string = '';
   uploadedFileURL: string | ArrayBuffer | null = '';
@@ -24,7 +24,9 @@ export class Dashboard implements OnInit {
   // New properties for authentication
   currentUser: User | null = null;
 
-  // @Input() data: string;
+  @Input() personalData: {  } = '';
+  finalData: {} = '';
+  responseData: any;
 
   constructor(
     private router: Router,
@@ -42,7 +44,7 @@ export class Dashboard implements OnInit {
       }
     });
 
-    // this.modifyData();
+    this.modifyData(this.personalData);
   }
 
 
@@ -83,85 +85,83 @@ export class Dashboard implements OnInit {
   }
 
   onSubmit(): void {
-    const content = `Job Description:\n${this.jobDescription}`;
-    const headers = new HttpHeaders({ 'Content-Type': 'text/plain' });
 
-
-    const test = {
+    const test ={
       "candidate_data": {
-        "name": "John Doe",
+      "name": "John Doe",
         "skills": [
-          "Python",
-          "AWS",
-          "JavaScript",
-          "React",
-          "Node.js",
-          "Docker",
-          "Kubernetes",
-          "CI/CD",
-          "Git",
-          "SQL"
-        ],
+        "Python",
+        "AWS",
+        "JavaScript",
+        "React",
+        "Node.js",
+        "Docker",
+        "Kubernetes",
+        "CI/CD",
+        "Git",
+        "SQL"
+      ],
         "experience": [
-          {
-            "job_title": "Senior Software Engineer",
-            "company": "Tech Innovations Inc.",
-            "start_date": "2021-03-01",
-            "end_date": "Present",
-            "location": "San Francisco, CA",
-            "responsibilities": [
-              "Led development of microservices architecture using Python and AWS",
-              "Implemented CI/CD pipelines reducing deployment time by 70%",
-              "Mentored junior developers and conducted code reviews",
-              "Collaborated with cross-functional teams to deliver high-quality software"
-            ]
-          },
-          {
-            "job_title": "Software Developer",
-            "company": "StartupXYZ",
-            "start_date": "2019-06-01",
-            "end_date": "2021-02-28",
-            "location": "New York, NY",
-            "responsibilities": [
-              "Developed full-stack web applications using React and Node.js",
-              "Designed and implemented RESTful APIs",
-              "Optimized database queries improving performance by 40%",
-              "Participated in agile development processes"
-            ]
-          }
-        ],
+        {
+          "job_title": "Senior Software Engineer",
+          "company": "Tech Innovations Inc.",
+          "start_date": "2021-03-01",
+          "end_date": "Present",
+          "location": "San Francisco, CA",
+          "responsibilities": [
+            "Led development of microservices architecture using Python and AWS",
+            "Implemented CI/CD pipelines reducing deployment time by 70%",
+            "Mentored junior developers and conducted code reviews",
+            "Collaborated with cross-functional teams to deliver high-quality software"
+          ]
+        },
+        {
+          "job_title": "Software Developer",
+          "company": "StartupXYZ",
+          "start_date": "2019-06-01",
+          "end_date": "2021-02-28",
+          "location": "New York, NY",
+          "responsibilities": [
+            "Developed full-stack web applications using React and Node.js",
+            "Designed and implemented RESTful APIs",
+            "Optimized database queries improving performance by 40%",
+            "Participated in agile development processes"
+          ]
+        }
+      ],
         "education": [
-          {
-            "degree": "Bachelor of Science in Computer Science",
-            "institution": "State University",
-            "start_year": "2015",
-            "end_year": "2019",
-            "location": "California, USA"
-          }
-        ],
+        {
+          "degree": "Bachelor of Science in Computer Science",
+          "institution": "State University",
+          "start_year": "2015",
+          "end_year": "2019",
+          "location": "California, USA"
+        }
+      ],
         "certifications": [
-          {
-            "name": "AWS Certified Solutions Architect",
-            "issuer": "Amazon Web Services",
-            "issue_date": "2023-06-15"
-          },
-          {
-            "name": "Certified Kubernetes Administrator",
-            "issuer": "Cloud Native Computing Foundation",
-            "issue_date": "2022-11-20"
-          }
-        ]
-      },
+        {
+          "name": "AWS Certified Solutions Architect",
+          "issuer": "Amazon Web Services",
+          "issue_date": "2023-06-15"
+        },
+        {
+          "name": "Certified Kubernetes Administrator",
+          "issuer": "Cloud Native Computing Foundation",
+          "issue_date": "2022-11-20"
+        }
+      ]
+    },
       "job_description": "Senior Software Engineer - Cloud Platform Team\n\nWe are seeking a highly skilled Senior Software Engineer to join our Cloud Platform team. The ideal candidate will have extensive experience in cloud technologies, particularly AWS, and a strong background in Python development.\n\nKey Responsibilities:\n- Design and implement scalable cloud-native applications\n- Build and maintain microservices architecture\n- Collaborate with DevOps teams to implement CI/CD pipelines\n- Mentor junior developers and provide technical leadership\n- Participate in architectural decisions and code reviews\n\nRequired Skills:\n- 5+ years of experience in software development\n- Strong proficiency in Python and modern web frameworks\n- Extensive experience with AWS services (EC2, S3, Lambda, RDS, etc.)\n- Experience with containerization technologies (Docker, Kubernetes)\n- Knowledge of CI/CD tools and practices\n- Strong understanding of database design and optimization\n- Experience with version control systems (Git)\n- Excellent problem-solving and communication skills\n\nPreferred Qualifications:\n- AWS certifications (Solutions Architect, Developer, etc.)\n- Experience with Infrastructure as Code (Terraform, CloudFormation)\n- Knowledge of monitoring and logging tools\n- Experience with agile development methodologies\n- Bachelor's degree in Computer Science or related field"
     }
 
     this.http.post(this.buildFileURL, test).subscribe({
-      next: (res) => console.log('Generated', res),
+      next: (res) => {
+        console.log('Generated', res)
+        this.responseData = res;
+      },
       error: (err) => console.error('Error:', err),
     });
 
-
-    //
     // // release old URL if exists
     // if (this.builtFileURL) {
     //   URL.revokeObjectURL(this.builtFileURL);
@@ -198,7 +198,47 @@ export class Dashboard implements OnInit {
     }
   }
 
-  modifyData() {
+  modifyData(data: any) {
+    this.finalData = {
+      candidate_data: {
+      name: data.fullName || '',
+        skills: data.skills || [],
+        experience: (data.experiences || []).map((exp: any) => ({
+        job_title: exp.jobTitle,
+        company: exp.company,
+        start_date: exp.startDate,
+        end_date: exp.endDate,
+        location: 'N/A',
+        responsibilities: [exp.responsibilities]
+      })),
+        education: (data.education || []).map((edu: any) => ({
+        degree: edu.degree,
+        institution: edu.institution,
+        start_year: new Date(edu.startDate).getFullYear().toString(),
+        end_year: new Date(edu.endDate).getFullYear().toString(),
+        location: 'N/A'
+      }))
+    },
+    job_description: data.description
+  };
 
+    console.log("finalData", this.finalData);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['personalData'] && !changes['personalData'].isFirstChange()) {
+      console.log('Parent data changed:', this.personalData);
+    }
+
+    this.modifyData(this.personalData);
+  }
+
+  downloadFile(): void {
+    const url = this.responseData.s3_urls.download_url;
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = '';
+    anchor.target = '_blank';
+    anchor.click();
   }
 }

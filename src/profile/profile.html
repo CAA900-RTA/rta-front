@@ -70,10 +70,18 @@
                   </div>
                   <div class="col-md-3">
                     <input
-                      type="number"
-                      formControlName="years"
+                      type="date"
+                      formControlName="startDate"
                       class="form-control"
-                      placeholder="Years"
+                      placeholder="Start Date"
+                    />
+                  </div>
+                  <div class="col-md-3">
+                    <input
+                      type="date"
+                      formControlName="endDate"
+                      class="form-control"
+                      placeholder="End Date"
                     />
                   </div>
                   <div class="col-md-1 text-end">
@@ -137,10 +145,18 @@
                   </div>
                   <div class="col-md-3">
                     <input
-                      type="number"
-                      formControlName="year"
+                      type="date"
+                      formControlName="startDate"
                       class="form-control"
-                      placeholder="Year"
+                      placeholder="Start Date"
+                    />
+                  </div>
+                  <div class="col-md-3">
+                    <input
+                      type="date"
+                      formControlName="endDate"
+                      class="form-control"
+                      placeholder="End Date"
                     />
                   </div>
                   <div class="col-md-1 text-end">
@@ -188,8 +204,8 @@
     <!-- Tab 2: Resume -->
 <mat-tab label="Build Resume" [disabled]="true">
   <div class="p-4">
-<!--    <app-dashboard [data]="dataToSubmit"></app-dashboard>-->
-    <app-dashboard></app-dashboard>
+    <app-dashboard [personalData]="dataToSubmit"></app-dashboard>
+<!--    <app-dashboard></app-dashboard>-->
   </div>
 </mat-tab>
   </mat-tab-group>

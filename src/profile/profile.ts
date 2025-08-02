@@ -42,7 +42,7 @@ export class Profile implements OnInit {
   private saveUrl = 'https://bdtwdawg26.execute-api.ca-central-1.amazonaws.com/dev/saveProfile';
   currentUser: User | null = null;
 
-  // dataToSubmit: string = '';
+  dataToSubmit: { } = '';
 
   constructor(private fb: FormBuilder, private http: HttpClient,
               private router: Router,
@@ -102,7 +102,7 @@ export class Profile implements OnInit {
       this.http.post(this.saveUrl, payload).subscribe({
         next: (res) => {
           console.log('✅ Save profile response:', res)
-          // this.dataToSubmit = payload;
+          this.dataToSubmit = payload;
           tabGroup.selectedIndex = 1;
         },
         error: (err) => console.error('❌ Save error:', err)
@@ -126,8 +126,9 @@ export class Profile implements OnInit {
     id: [''],
     jobTitle: ['', Validators.required],
     company: ['', Validators.required],
-    years: ['', [Validators.required, Validators.min(0)]],
     responsibilities: [''],
+    startDate: [''],
+    endDate: [''],
     isDeleted: [false]
   });
 }
@@ -153,7 +154,8 @@ export class Profile implements OnInit {
       id: [''],
       degree: ['', Validators.required],
       institution: ['', Validators.required],
-      year: ['', [Validators.required, Validators.min(0)]],
+      startDate: [''],
+      endDate: [''],
       isDeleted: [false]
     });
   }
