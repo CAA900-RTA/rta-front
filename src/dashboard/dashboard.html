@@ -49,7 +49,16 @@
         ></textarea>
 
         <!-- Build Button -->
-        <button type="submit" [disabled]="!isFormValid()">Build</button>
+        <button
+          type="submit"
+          (click)="onSubmit()"
+          [disabled]="!isFormValid() || isLoading">
+          <ng-container *ngIf="!isLoading">Build</ng-container>
+          <ng-container *ngIf="isLoading">
+            <span class="spinner"></span> Building...
+          </ng-container>
+        </button>
+
       </form>
     </div>
 
