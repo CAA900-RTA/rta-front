@@ -66,7 +66,6 @@
       <div *ngIf="responseData; else placeholder">
         <div class="file-card">
           <h3>{{responseData.s3_urls.filename.split("_").join(" ")}}</h3>
-          <pre class="file-content">{{ builtFileContent }}</pre>
           <a class="download-btn" (click)="downloadFile()">Download</a>
           <br/>
           <a

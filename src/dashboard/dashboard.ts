@@ -23,16 +23,12 @@ export class Dashboard implements OnInit, OnChanges {
   uploadedFileURL: string | ArrayBuffer | null = '';
   jobDescription: string = '';
   buildFileURL = 'https://uqd364ammi6ufsqikkc5mvbeaa0txxlb.lambda-url.us-east-1.on.aws';
-  builtFileName: string = '';
-  builtFileContent: string = '';
-
   currentUser: User | null = null;
 
   @Input() personalData: any = '';
   finalData: any = '';
   responseData: any;
-
-  isLoading: boolean = false; // ✅ Spinner flag
+  isLoading: boolean = false;
 
   constructor(
     private router: Router,
@@ -86,16 +82,16 @@ export class Dashboard implements OnInit, OnChanges {
   }
 
   onSubmit(): void {
-    this.isLoading = true; // ✅ Start spinner
+    this.isLoading = true;
     this.http.post(this.buildFileURL, this.finalData).subscribe({
       next: (res) => {
         console.log('Generated', res);
         this.responseData = res;
-        this.isLoading = false; // ✅ Stop spinner
+        this.isLoading = false;
       },
       error: (err) => {
         console.error('Error:', err);
-        this.isLoading = false; // ✅ Stop spinner
+        this.isLoading = false;
       }
     });
   }
