@@ -24,7 +24,7 @@ export class Dashboard implements OnInit {
   // New properties for authentication
   currentUser: User | null = null;
 
-  @Input() data: string;
+  // @Input() data: string;
 
   constructor(
     private router: Router,
