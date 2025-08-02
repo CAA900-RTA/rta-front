@@ -39,13 +39,20 @@ export class Dashboard implements OnInit, OnChanges {
   ngOnInit(): void {
     this.authService.currentUser$.subscribe(user => {
       this.currentUser = user;
+  
       if (!user) {
         this.router.navigate(['/login']);
+      } else {
+        const username = user.username || user.email;
+        if (username) {
+          this.fetchProfileData(username);
+        } else {
+          console.error('Username or email is missing.');
+        }
       }
     });
-
-    this.modifyData(this.personalData);
   }
+  
 
   get isLoggedIn(): boolean {
     return this.authService.isAuthenticated;
@@ -113,6 +120,22 @@ export class Dashboard implements OnInit, OnChanges {
     }
   }
 
+  fetchProfileData(username: string) {
+    const url = 'https://bdtwdawg26.execute-api.ca-central-1.amazonaws.com/dev/fetchProfile';
+    const payload = { username: this.currentUser?.email };
+  
+    this.http.post(url, payload).subscribe({
+      next: (res) => {
+        console.log('Profile Data:', res);
+        this.personalData = res;
+        this.modifyData(res);
+      },
+      error: (err) => {
+        console.error('Failed to fetch profile:', err);
+      }
+    });
+  }
+
   modifyData(data: any) {
     this.finalData = {
       candidate_data: {
@@ -157,3 +180,4 @@ export class Dashboard implements OnInit, OnChanges {
     anchor.click();
   }
 }
+
