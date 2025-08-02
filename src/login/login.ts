@@ -74,6 +74,9 @@ export class LoginComponent implements OnInit, OnDestroy {
         
         // Try regular sign in first
         await this.authService.signIn(email, password);
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('username', email);
+        window.location.reload();
         
         // Navigation will happen automatically via the subscription
         
@@ -108,6 +111,9 @@ export class LoginComponent implements OnInit, OnDestroy {
         
         // Use force sign in to handle existing sessions
         await this.authService.forceSignIn(email, password);
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('username', email);
+        window.location.reload();
         
         // Navigation will happen automatically via the subscription
         
@@ -124,6 +130,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   async signOutCurrentUser(): Promise<void> {
     try {
       await this.authService.signOut();
+      localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem('username');
       this.errorMessage = '';
       this.showSignOutOption = false;
       this.loginForm.reset();
