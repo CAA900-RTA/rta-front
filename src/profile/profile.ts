@@ -58,14 +58,71 @@ export class Profile implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authService.currentUser$.subscribe(user => {
-      this.currentUser = user;
-      if (!user) {
-        // If user is not authenticated, redirect to login
-        this.router.navigate(['/login']);
+  this.authService.currentUser$.subscribe(user => {
+    this.currentUser = user;
+    if (!user) {
+      this.router.navigate(['/login']);
+    } else {
+      if (user.email) {
+        this.loadProfileData(user.email);
       }
-    });
-  }
+    }
+  });
+}
+
+loadProfileData(email: string) {
+  this.http.post(this.fetchUrl, { username: email }).subscribe({
+    next: (res: any) => {
+      // Assuming your response has a profile object or is the profile data directly
+      const profile = res; // or res.profile if wrapped
+
+      // Patch simple form controls
+      this.profileForm.patchValue({
+        fullName: profile.fullName || '',
+        description: profile.description || '',
+      });
+
+      // Patch customTags (skills)
+      this.customTags.clear();
+      (profile.skills || []).forEach((skill: string) => {
+        this.customTags.push(this.fb.control(skill));
+      });
+
+      // Patch experiences FormArray
+      this.experiences.clear();
+      (profile.experiences || []).forEach((exp: any) => {
+        this.experiences.push(this.fb.group({
+          id: [exp.id || ''],
+          jobTitle: [exp.jobTitle || '', Validators.required],
+          company: [exp.company || '', Validators.required],
+          responsibilities: [exp.responsibilities || ''],
+          startDate: [exp.startDate || ''],
+          endDate: [exp.endDate || ''],
+          isDeleted: [false]
+        }));
+      });
+
+      // Patch education FormArray
+      this.education.clear();
+      (profile.education || []).forEach((edu: any) => {
+        this.education.push(this.fb.group({
+          id: [edu.id || ''],
+          degree: [edu.degree || '', Validators.required],
+          institution: [edu.institution || '', Validators.required],
+          startDate: [edu.startDate || ''],
+          endDate: [edu.endDate || ''],
+          isDeleted: [false]
+        }));
+      });
+
+      // Store for dashboard tab (optional)
+      this.dataToSubmit = profile;
+    },
+    error: (err) => {
+      console.error('Failed to load profile data', err);
+    }
+  });
+}
 
     saveData(tabGroup: MatTabGroup) {
     const experiencesArray = this.profileForm.get('experiences') as FormArray;
