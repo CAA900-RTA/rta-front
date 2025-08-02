@@ -16,6 +16,7 @@ import { Dashboard } from '../dashboard/dashboard';
 import { MatTabGroup } from '@angular/material/tabs';
 import {Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
+import {AuthService, User} from '../app/services/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -39,9 +40,13 @@ export class Profile implements OnInit {
   profileForm: FormGroup;
   private fetchUrl = 'https://bdtwdawg26.execute-api.ca-central-1.amazonaws.com/dev/fetchProfile';
   private saveUrl = 'https://bdtwdawg26.execute-api.ca-central-1.amazonaws.com/dev/saveProfile';
+  currentUser: User | null = null;
 
+  dataToSubmit: string = '';
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  constructor(private fb: FormBuilder, private http: HttpClient,
+              private router: Router,
+              private authService: AuthService,) {
     this.profileForm = this.fb.group({
       experiences: this.fb.array([this.createExperienceGroup()]),
       education: this.fb.array([this.createEducationGroup()]),
@@ -52,9 +57,17 @@ export class Profile implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.authService.currentUser$.subscribe(user => {
+      this.currentUser = user;
+      if (!user) {
+        // If user is not authenticated, redirect to login
+        this.router.navigate(['/login']);
+      }
+    });
+  }
 
-    saveData() {
+    saveData(tabGroup: MatTabGroup) {
     const experiencesArray = this.profileForm.get('experiences') as FormArray;
     for (let i = experiencesArray.length - 1; i >= 0; i--) {
       const exp = experiencesArray.at(i);
@@ -74,7 +87,7 @@ export class Profile implements OnInit {
     if (this.profileForm.valid) {
 
       const payload = {
-        username: "John", //hardcoded
+        username: this.currentUser?.username,
         description: this.profileForm.value.description,
         fullName: this.profileForm.value.fullName,
         skills: this.profileForm.value.customTags,
@@ -87,7 +100,11 @@ export class Profile implements OnInit {
 
       // uncomment this while testing
       this.http.post(this.saveUrl, payload).subscribe({
-        next: (res) => console.log('✅ Save profile response:', res),
+        next: (res) => {
+          console.log('✅ Save profile response:', res)
+          this.dataToSubmit = payload;
+          tabGroup.selectedIndex = 1;
+        },
         error: (err) => console.error('❌ Save error:', err)
       });
 
@@ -137,7 +154,6 @@ export class Profile implements OnInit {
       degree: ['', Validators.required],
       institution: ['', Validators.required],
       year: ['', [Validators.required, Validators.min(0)]],
-      responsibilities: [''],
       isDeleted: [false]
     });
   }

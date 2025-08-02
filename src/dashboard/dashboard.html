@@ -1,6 +1,6 @@
 <div class="dashboard-header">
   <div class="user-info">
-    <h1>Welcome, {{ userName }}!</h1>
+    <h1>Welcome,</h1>
     <p *ngIf="currentUser?.email">{{ currentUser?.email }}</p>
   </div>
   <!-- <button (click)="logout()" class="logout-btn">
@@ -58,7 +58,7 @@
         <div class="file-card">
           <h3>{{ builtFileName }}</h3>
 <!--          <pre class="file-content">{{ builtFileContent }}</pre>-->
-          <a [href]="builtFileURL" [download]="builtFileName" class="download-btn">Download</a>
+          <a [download]="builtFileName" class="download-btn">Download</a>
           <br/>
           <a class="download-btn mt-2" (click)="goToProfile()">Regenerate</a>
         </div>

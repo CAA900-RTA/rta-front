@@ -154,16 +154,6 @@
                     </button>
                   </div>
                 </div>
-                <div class="row g-3">
-                  <div class="pt-2">
-                    <textarea
-                      class="form-control"
-                      formControlName="responsibilities"
-                      rows="4"
-                      placeholder="Tell us about your responsibilities..."
-                    ></textarea>
-                  </div>
-                </div>
               </div>
             </div>
             <button
@@ -187,8 +177,8 @@
           </div>
 
           <div class="d-flex justify-content-end gap-2">
-            <button class="btn btn-primary rta-bg" type="submit" (click)="saveData()">Save</button>
-            <button class="btn btn-primary rta-bg-outline" type="submit" (click)="goToNextTab(tabGroup)">Next</button>
+            <button class="btn btn-primary rta-bg" type="submit" (click)="saveData(tabGroup)">Next</button>
+            <button class="btn btn-primary rta-bg-outline" type="submit" (click)="goToNextTab(tabGroup)">Nexttt</button>
           </div>
 
         </form>
@@ -198,7 +188,7 @@
     <!-- Tab 2: Resume -->
 <mat-tab label="Build Resume" [disabled]="true">
   <div class="p-4">
-    <app-dashboard></app-dashboard>
+    <app-dashboard [data]="dataToSubmit"></app-dashboard>
   </div>
 </mat-tab>
   </mat-tab-group>
