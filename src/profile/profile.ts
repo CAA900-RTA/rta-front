@@ -87,7 +87,7 @@ export class Profile implements OnInit {
     if (this.profileForm.valid) {
 
       const payload = {
-        username: this.currentUser?.username,
+        username: this.currentUser?.email,
         description: this.profileForm.value.description,
         fullName: this.profileForm.value.fullName,
         skills: this.profileForm.value.customTags,
