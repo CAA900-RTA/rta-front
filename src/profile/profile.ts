@@ -42,7 +42,7 @@ export class Profile implements OnInit {
   private saveUrl = 'https://bdtwdawg26.execute-api.ca-central-1.amazonaws.com/dev/saveProfile';
   currentUser: User | null = null;
 
-  dataToSubmit: string = '';
+  // dataToSubmit: string = '';
 
   constructor(private fb: FormBuilder, private http: HttpClient,
               private router: Router,
@@ -102,7 +102,7 @@ export class Profile implements OnInit {
       this.http.post(this.saveUrl, payload).subscribe({
         next: (res) => {
           console.log('✅ Save profile response:', res)
-          this.dataToSubmit = payload;
+          // this.dataToSubmit = payload;
           tabGroup.selectedIndex = 1;
         },
         error: (err) => console.error('❌ Save error:', err)
