@@ -1,9 +1,21 @@
 <div class="mx-5">
   <mat-tab-group mat-stretch-tabs dynamicHeight #tabGroup>
     <!-- Tab 1: Profile Builder -->
-    <mat-tab label="Build Profile">
+    <mat-tab label="Build Profile" >
       <div class="p-4">
-        <form [formGroup]="profileForm" (ngSubmit)="goToNextTab(tabGroup)">
+        <form [formGroup]="profileForm">
+          <div class="mb-4">
+            <label class="form-label fw-bold">Full Name</label>
+            <div class="col-md-4">
+              <input
+                type="text"
+                formControlName="fullName"
+                class="form-control"
+                placeholder="Full Name"
+              />
+            </div>
+          </div>
+
           <!-- Custom Tags -->
           <div class="mb-4">
             <label class="form-label fw-bold">Add Skills</label>
@@ -73,6 +85,16 @@
                     >
                       ×
                     </button>
+                  </div>
+                </div>
+                <div class="row g-3">
+                <div class="pt-2">
+                    <textarea
+                      class="form-control"
+                      formControlName="responsibilities"
+                      rows="4"
+                      placeholder="Tell us about your responsibilities..."
+                    ></textarea>
                   </div>
                 </div>
               </div>
@@ -154,18 +176,19 @@
             ></textarea>
           </div>
 
-          <!-- Next -->
-          <div class="text-end">
-            <button class="btn btn-primary rta-bg" type="submit">Next</button>
+          <div class="d-flex justify-content-end gap-2">
+            <button class="btn btn-primary rta-bg" type="submit" (click)="saveData(tabGroup)">Next</button>
+            <button class="btn btn-primary rta-bg-outline" type="submit" (click)="goToNextTab(tabGroup)">Nexttt</button>
           </div>
+
         </form>
       </div>
     </mat-tab>
 
     <!-- Tab 2: Resume -->
-<mat-tab label="Build Resume" [disabled]="false">
+<mat-tab label="Build Resume" [disabled]="true">
   <div class="p-4">
-    <app-dashboard></app-dashboard>
+    <app-dashboard [data]="dataToSubmit"></app-dashboard>
   </div>
 </mat-tab>
   </mat-tab-group>
