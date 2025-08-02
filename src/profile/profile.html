@@ -1,5 +1,10 @@
 <div class="mx-5">
-  <mat-tab-group mat-stretch-tabs dynamicHeight #tabGroup>
+  <mat-tab-group
+    mat-stretch-tabs
+    dynamicHeight
+    #tabGroup
+    (selectedTabChange)="onTabChange()"
+  >
     <!-- Tab 1: Profile Builder -->
     <mat-tab label="Build Profile" >
       <div class="p-4">

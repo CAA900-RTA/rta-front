@@ -201,4 +201,8 @@ export class Profile implements OnInit {
 
   }
 
+  onTabChange() {
+    window.scrollTo(0, 0);
+  }
+
 }
