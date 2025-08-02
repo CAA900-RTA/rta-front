@@ -42,7 +42,7 @@ export class Profile implements OnInit {
   private saveUrl = 'https://bdtwdawg26.execute-api.ca-central-1.amazonaws.com/dev/saveProfile';
   currentUser: User | null = null;
 
-  // dataToSubmit: string = '';
+  dataToSubmit: { } = '';
 
   constructor(private fb: FormBuilder, private http: HttpClient,
               private router: Router,
@@ -87,7 +87,7 @@ export class Profile implements OnInit {
     if (this.profileForm.valid) {
 
       const payload = {
-        username: this.currentUser?.username,
+        username: this.currentUser?.email,
         description: this.profileForm.value.description,
         fullName: this.profileForm.value.fullName,
         skills: this.profileForm.value.customTags,
@@ -101,11 +101,11 @@ export class Profile implements OnInit {
       // uncomment this while testing
       this.http.post(this.saveUrl, payload).subscribe({
         next: (res) => {
-          console.log('✅ Save profile response:', res)
-          // this.dataToSubmit = payload;
+          console.log('Successfully saved', res)
+          this.dataToSubmit = payload;
           tabGroup.selectedIndex = 1;
         },
-        error: (err) => console.error('❌ Save error:', err)
+        error: (err) => console.error('Error:', err)
       });
 
 
@@ -126,8 +126,9 @@ export class Profile implements OnInit {
     id: [''],
     jobTitle: ['', Validators.required],
     company: ['', Validators.required],
-    years: ['', [Validators.required, Validators.min(0)]],
     responsibilities: [''],
+    startDate: [''],
+    endDate: [''],
     isDeleted: [false]
   });
 }
@@ -153,7 +154,8 @@ export class Profile implements OnInit {
       id: [''],
       degree: ['', Validators.required],
       institution: ['', Validators.required],
-      year: ['', [Validators.required, Validators.min(0)]],
+      startDate: [''],
+      endDate: [''],
       isDeleted: [false]
     });
   }
@@ -197,6 +199,10 @@ export class Profile implements OnInit {
       tabGroup.selectedIndex = 1;
     // }
 
+  }
+
+  onTabChange() {
+    window.scrollTo(0, 0);
   }
 
 }

@@ -49,18 +49,32 @@
         ></textarea>
 
         <!-- Build Button -->
-        <button type="submit" [disabled]="!isFormValid()">Build</button>
+        <button
+          type="submit"
+          (click)="onSubmit()"
+          [disabled]="!isFormValid() || isLoading">
+          <ng-container *ngIf="!isLoading">Build</ng-container>
+          <ng-container *ngIf="isLoading">
+            <span class="spinner"></span> Building...
+          </ng-container>
+        </button>
+
       </form>
     </div>
 
     <div class="right">
-      <div *ngIf="builtFileContent; else placeholder">
+      <div *ngIf="responseData; else placeholder">
         <div class="file-card">
-          <h3>{{ builtFileName }}</h3>
-<!--          <pre class="file-content">{{ builtFileContent }}</pre>-->
-          <a [download]="builtFileName" class="download-btn">Download</a>
+          <h3>{{responseData.s3_urls.filename.split("_").join(" ")}}</h3>
+          <a class="download-btn" (click)="downloadFile()">Download</a>
           <br/>
-          <a class="download-btn mt-2" (click)="goToProfile()">Regenerate</a>
+          <a
+            class="download-btn mt-2"
+            [href]="responseData.s3_urls.view_url"
+            target="_blank"
+            rel="noopener noreferrer">
+            Preview
+          </a>
         </div>
       </div>
       <ng-template #placeholder>

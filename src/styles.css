@@ -30,10 +30,10 @@
   align-items: center;
 }
 
-.rta-bg-outline {
-  background-color: transparent;
-  color: var(--rta-secondary);
-  border: 2px solid var(--rta-secondary);
+.rta-bg-diff {
+  background-color: var(--rta-primary);
+  color: #fff;
+  border: 2px solid transparent;
   transition: all 0.3s ease;
   padding: 0.5rem 1rem;
   border-radius: 5px;
@@ -41,9 +41,10 @@
   cursor: pointer;
 }
 
-.rta-bg-outline:hover {
-  background-color: var(--rta-secondary);
-  color: #fff;
+.rta-bg-diff:hover {
+  background-color: #fff;
+  color: var(--rta-primary);
+  border-color: var(--rta-primary);
 }
 
 
