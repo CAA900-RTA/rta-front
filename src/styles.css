@@ -30,3 +30,20 @@
   align-items: center;
 }
 
+.rta-bg-outline {
+  background-color: transparent;
+  color: var(--rta-secondary);
+  border: 2px solid var(--rta-secondary);
+  transition: all 0.3s ease;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.rta-bg-outline:hover {
+  background-color: var(--rta-secondary);
+  color: #fff;
+}
+
+

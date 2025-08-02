@@ -46,6 +46,7 @@ export class Profile implements OnInit {
       experiences: this.fb.array([this.createExperienceGroup()]),
       education: this.fb.array([this.createEducationGroup()]),
       description: [''],
+      fullName: [''],
       skills: [''],
       customTags: this.fb.array([])
     });
@@ -53,7 +54,7 @@ export class Profile implements OnInit {
 
   ngOnInit(): void {}
 
-  goToNextTab(tabGroup: MatTabGroup): void {
+    saveData() {
     const experiencesArray = this.profileForm.get('experiences') as FormArray;
     for (let i = experiencesArray.length - 1; i >= 0; i--) {
       const exp = experiencesArray.at(i);
@@ -71,11 +72,11 @@ export class Profile implements OnInit {
     }
 
     if (this.profileForm.valid) {
-      tabGroup.selectedIndex = 1;
 
       const payload = {
         username: "John", //hardcoded
         description: this.profileForm.value.description,
+        fullName: this.profileForm.value.fullName,
         skills: this.profileForm.value.customTags,
         experiences: this.profileForm.value.experiences,
         education: this.profileForm.value.education,
@@ -109,6 +110,7 @@ export class Profile implements OnInit {
     jobTitle: ['', Validators.required],
     company: ['', Validators.required],
     years: ['', [Validators.required, Validators.min(0)]],
+    responsibilities: [''],
     isDeleted: [false]
   });
 }
@@ -135,6 +137,7 @@ export class Profile implements OnInit {
       degree: ['', Validators.required],
       institution: ['', Validators.required],
       year: ['', [Validators.required, Validators.min(0)]],
+      responsibilities: [''],
       isDeleted: [false]
     });
   }
@@ -171,6 +174,13 @@ export class Profile implements OnInit {
 
   removeCustomTag(index: number): void {
     this.customTags.removeAt(index);
+  }
+
+  goToNextTab(tabGroup: MatTabGroup): void {
+    // if (this.profileForm.valid) {
+      tabGroup.selectedIndex = 1;
+    // }
+
   }
 
 }

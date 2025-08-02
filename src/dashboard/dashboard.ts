@@ -16,7 +16,7 @@ export class Dashboard implements OnInit {
   uploadedFileName: string = '';
   uploadedFileURL: string | ArrayBuffer | null = '';
   jobDescription: string = '';
-  builtFileURL: string | null = null;
+  builtFileURL = 'https://uqd364ammi6ufsqikkc5mvbeaa0txxlb.lambda-url.us-east-1.on.aws';
   builtFileName: string = '';
   builtFileContent: string = '';
 
