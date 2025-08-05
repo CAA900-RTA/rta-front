@@ -54,4 +54,16 @@ ng e2e
 
 Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
-## Additional Resources
+## Images
+
+## Landing Page
+<img width="2559" height="1097" alt="image" src="https://github.com/user-attachments/assets/9494a1dc-ad0e-4d30-bcf6-853762a162c9" />
+
+## Login Page:
+<img width="2339" height="1274" alt="image" src="https://github.com/user-attachments/assets/021c3102-f35c-4608-90fd-75cabd45ab22" />
+
+## Dashboard
+<img width="2090" height="1307" alt="image" src="https://github.com/user-attachments/assets/7cbe0d23-61f9-4948-bd68-431d5f9342e2" />
+
+## Resume Builder
+<img width="2371" height="1313" alt="image" src="https://github.com/user-attachments/assets/b6ffd92a-58cd-4d49-a957-37584cc2d460" />
